@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kietaovios.com - Bio Link</title>
+    <!-- Chèn font chữ mượt giống trong ảnh -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <!-- Chèn thư viện icon FontAwesome -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Tạo hiệu ứng các đốm sao mờ phía sau */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hiệu ứng ảnh đại diện vòng tròn đỏ phát sáng nhảy động */
+        .avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 20px;
+        }
+
+        .avatar-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff0055, #ff0000, #990000);
+            z-index: 1;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            animation: rotateGlow 4s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 3px solid #020617;
+            object-fit: cover;
+            z-index: 2;
+        }
+
+        .info h2 {
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        /* Tên chính chữ nghiêng đậm có tích xanh kèm hiệu ứng đổi màu nhẹ */
+        .name-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .name {
+            font-size: 26px;
+            font-weight: 700;
+            font-style: italic;
+            background: linear-gradient(to right, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .verified-badge {
+            color: #3b82f6;
+            font-size: 20px;
+        }
+
+        .sub-title {
+            font-size: 15px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .sub-title span {
+            color: #818cf8;
+            font-weight: 700;
+        }
+
+        /* Hàng ngang 3 nút mạng xã hội */
+        .social-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .social-btn {
+            width: 55px;
+            height: 55px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 22px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(51, 65, 85, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Các khối danh sách nút dài bên dưới */
+        .links-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-item {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .link-item:hover {
+            transform: scale(1.01);
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-align: left;
+        }
+
+        /* Icon hình tròn bên trái của các nút danh sách */
+        .link-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        /* Màu riêng biệt cho từng loại nút icon */
+        .icon-green { background: #10b981; }
+        .icon-blue { background: #0ea5e9; }
+
+        .text-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            color: #f8fafc;
+        }
+
+        .text-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .arrow-icon {
+            color: #475569;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Ảnh đại diện viền phát sáng -->
+        <div class="avatar-wrapper">
+            <!-- Ảnh đại diện mặc định -->
+            <img src="https://bento.me" alt="Avatar" class="avatar">
+        </div>
+
+        <!-- Thông tin tên -->
+        <div class="info">
+            <h2>Hi, i am</h2>
+            <div class="name-wrapper">
+                <span class="name">Kietaovios.com</span>
+                <!-- Icon tích xanh chính chủ -->
+                <i class="fa-solid fa-circle-check verified-badge"></i>
+            </div>
+            <div class="sub-title">and I'm a <span>Mod</span></div>
+        </div>
+
+        <!-- Hàng ngang 3 nút mạng xã hội (Thay dấu # bằng link thật của bạn) -->
+        <div class="social-group">
+            <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+
+        <!-- Danh sách nút tính năng bên dưới (Thay dấu # bằng link thật của bạn) -->
+        <div class="links-group">
+            
+            <!-- Nút 1: Shop Mua Key -->
+            <a href="#" class="link-item">
+                <div class="link-content">
+                    <div class="link-icon icon-green">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+                    <div>
+                        <div class="text-title">Shop Mua Key</div>
+                        <div class="text-desc">Mua key iOS + Android</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-arrow-right arrow-icon"></i>
+            </a>
+
+            <!-- Nút 2: Kênh discord -->
+            <a href="#" class="link-item">
+                <div class="link-content">
+                    <div class="link-icon icon-blue">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </div>
+                    <div>
+                        <div class="text-title">Kênh Telegram</div>
+                        <div class="text-desc">Nhận Thông Báo Update</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-arrow-right arrow-icon"></i>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
